@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 This package provides some useful functions  for mixtures of Gaussian Markov random fields. The density function is given by 
 
-\begin{equation}
-f(x|\Theta) = \sum \limits_{k=1}^{K}{\pi_k f_k(x|\mu_k,\Sigma_k)}
-\end{equation}
+\[
+ f(x|\Theta) = \sum \limits_{k=1}^{K}{\pi_k f_k(x|\mu_k,\Sigma_k)}
+\]
 
 where $f_k(x|\mu_{k},\Sigma_{k})$ is the density function of the multivariate normal distribution with mean $\mu_{k}$ and covariance matrix $\Sigma_{k}$, and the mixing proportions $0<\pi_{k}<1$ satisfy $\displaystyle\sum_{k=1}^{K}\pi_{k}=1$.
 In addition, each component of this mixture is associated with a decomposable undirected graph $G_k =(V,\mathcal{E}_k)$, where $V$ is the vertices (nodes) set and $\mathcal{E}_k$ corresponds to the edges of the graph $G_k$.
@@ -105,14 +105,14 @@ The main function in this package is the "gemEstimator" which estimates the Gaus
 Starting from an intial parameters set $\Theta^{(0)}$, this function repeats iteratively the 3 steps of the GEM algorithm :
 
 * Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit $\Theta^{(l)}$ :
-$$
+
+$
 Q(\Theta||\Theta^{(l)}) = E_{\Theta^{(l)}}(L(X_1,...,X_n,Z_1,...,Z_n,\Theta)|X_1,...,X_n)
-$$
+$
 
 * Maximization step: Consists in a global maximization of $Q(\Theta||\Theta^{(l)})$ with respect to $\Theta$ :
-$$
-\Theta^{(l+1)} = \arg \max_{\Theta} Q(\Theta||\Theta^{(l)})
-$$
+
+$\Theta^{(l+1)} = \arg \max_{\Theta} Q(\Theta||\Theta^{(l)})$
 
 * G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
 

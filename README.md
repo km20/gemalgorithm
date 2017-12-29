@@ -4,6 +4,10 @@ gemalgorithm
 
 This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by
 
+$$
+ f(x|\\Theta) = \\sum \\limits\_{k=1}^{K}{\\pi\_k f\_k(x|\\mu\_k,\\Sigma\_k)}
+$$
+
 where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\\displaystyle\\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
 *Θ* = {*π*<sub>1</sub>, ..., *π*<sub>*K*</sub>, *μ*<sub>1</sub>, ..., *μ*<sub>*K*</sub>, *Σ*<sub>1</sub>, ..., *Σ*<sub>*K*</sub>}
 
@@ -76,10 +80,12 @@ The main function in this package is the "gemEstimator" which estimates the Gaus
 Starting from an intial parameters set *Θ*<sup>(0)</sup>, this function repeats iteratively the 3 steps of the GEM algorithm :
 
 -   Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit *Θ*<sup>(*l*)</sup> :
-    *Q*(*Θ*||*Θ*<sup>(*l*)</sup>)=*E*<sub>*Θ*<sup>(*l*)</sup></sub>(*L*(*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>, *Z*<sub>1</sub>, ..., *Z*<sub>*n*</sub>, *Θ*)|*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>)
+
+$ Q(||^{(l)}) = E\_{^{(l)}}(L(X\_1,...,X\_n,Z\_1,...,Z\_n,)|X\_1,...,X\_n) $
 
 -   Maximization step: Consists in a global maximization of *Q*(*Θ*||*Θ*<sup>(*l*)</sup>) with respect to *Θ* :
-    *Θ*<sup>(*l* + 1)</sup> = argmax<sub>*Θ*</sub>*Q*(*Θ*||*Θ*<sup>(*l*)</sup>)
+
+*Θ*<sup>(*l* + 1)</sup> = argmax<sub>*Θ*</sub>*Q*(*Θ*||*Θ*<sup>(*l*)</sup>)
 
 -   G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
 
