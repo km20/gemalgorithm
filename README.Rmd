@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 This package provides some useful functions  for mixtures of Gaussian Markov random fields. The density function is given by 
 
-$$
+\begin{equation}
 f(x|\Theta) = \sum \limits_{k=1}^{K}{\pi_k f_k(x|\mu_k,\Sigma_k)}
-$$
+\end{equation}
 
 where $f_k(x|\mu_{k},\Sigma_{k})$ is the density function of the multivariate normal distribution with mean $\mu_{k}$ and covariance matrix $\Sigma_{k}$, and the mixing proportions $0<\pi_{k}<1$ satisfy $\displaystyle\sum_{k=1}^{K}\pi_{k}=1$.
 In addition, each component of this mixture is associated with a decomposable undirected graph $G_k =(V,\mathcal{E}_k)$, where $V$ is the vertices (nodes) set and $\mathcal{E}_k$ corresponds to the edges of the graph $G_k$.

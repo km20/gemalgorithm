@@ -4,10 +4,6 @@ gemalgorithm
 
 This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by
 
-$$
-f(x|\\Theta) = \\sum \\limits\_{k=1}^{K}{\\pi\_k f\_k(x|\\mu\_k,\\Sigma\_k)}
-$$
-
 where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\\displaystyle\\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
 *Θ* = {*π*<sub>1</sub>, ..., *π*<sub>*K*</sub>, *μ*<sub>1</sub>, ..., *μ*<sub>*K*</sub>, *Σ*<sub>1</sub>, ..., *Σ*<sub>*K*</sub>}
 
@@ -68,10 +64,7 @@ Since Anew prefectly matches the conditional independencies in the graph, d0 is 
 Posterior probability : computeTau
 ----------------------------------
 
-The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*i**j*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*t**h*</sup> component of the mixture and given by:
-$$
-\\tau\_{ij} =\\frac{\\pi^{(l)}\_j f\_j(X\_i|\\mu\_j,\\Sigma\_j)}{\\sum\\limits\_{k=1}^K\\pi\_k f\_k(X\_i|\\mu\_k,\\Sigma\_k)}
-$$
+The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*i**j*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*t**h*</sup> component of the mixture and given by: $ \_{ij} = $
 
 This function returns a matrix with n rows ( observations number) and K columns (mixture components number).
 
