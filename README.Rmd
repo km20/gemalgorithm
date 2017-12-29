@@ -92,9 +92,9 @@ Since Anew prefectly matches the conditional independencies in the graph, d0 is 
 ## Posterior probability : computeTau
 
 The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. $\tau_{ij}$  is the posterior probability that the observation $X_i$ belongs to the $j^{th}$ component of the mixture and given by:
-$$
+$
 \tau_{ij} =\frac{\pi^{(l)}_j f_j(X_i|\mu_j,\Sigma_j)}{\sum\limits_{k=1}^K\pi_k f_k(X_i|\mu_k,\Sigma_k)}
-$$
+$
 
 This function returns a matrix with n rows ( observations number) and K columns (mixture components number).
 
