@@ -79,9 +79,11 @@ The main function in this package is the "gemEstimator" which estimates the Gaus
 Starting from an intial parameters set *Θ*<sup>(0)</sup>, this function repeats iteratively the 3 steps of the GEM algorithm :
 
 -   Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit *Θ*<sup>(*l*)</sup> :
+
     *Q*(*Θ*||*Θ*<sup>(*l*)</sup>)=*E*<sub>*Θ*<sup>(*l*)</sup></sub>(*L*(*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>, *Z*<sub>1</sub>, ..., *Z*<sub>*n*</sub>, *Θ*)|*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>)
 
 -   Maximization step: Consists in a global maximization of *Q*(*Θ*||*Θ*<sup>(*l*)</sup>) with respect to *Θ* :
+
     *Θ*<sup>(*l* + 1)</sup> = argmax<sub>*Θ*</sub>*Q*(*Θ*||*Θ*<sup>(*l*)</sup>)
 
 -   G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
@@ -90,6 +92,5 @@ The stopping rule depends on the "Nit" parameter used in the function gemEstimat
 
 -   If Nit &gt; 0 : The algorithm stops after exactly Nit iterations.
 -   If Nit &lt; 0 : The algorithm stops when :
-    $$
-    \\frac{||\\Theta^{l+1} -\\Theta^{l}||}{1+||\\Theta^{l}||} &lt; 10^{-4}
-    $$
+
+    ![4](http://www.sciweavers.org/upload/Tex2Img_1514566429/render.png)
