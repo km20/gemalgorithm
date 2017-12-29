@@ -2,9 +2,10 @@
 gemalgorithm
 ============
 
-This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by *f*(*x*|*Θ*)=*s**u**m*<sub>*k* = 1</sub><sup>*K*</sup>*π*<sub>*k*</sub>*f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>)
+This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by
+$$ \\begin{equation} f(x|\\Theta) = \\sum\_{k=1}^{K}{\\pi\_k f\_k(x|\\mu\_k,\\Sigma\_k)}\\end{equation}$$
 
-where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\displaystyle\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
+where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\\displaystyle\\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
 *Θ* = {*π*<sub>1</sub>, ..., *π*<sub>*K*</sub>, *μ*<sub>1</sub>, ..., *μ*<sub>*K*</sub>, *Σ*<sub>1</sub>, ..., *Σ*<sub>*K*</sub>}
 
 This package allows the estimation of the mixture parameters and data classification. These tasks are achieved using an extended Expectation Maximization algorithm called Graphical Expectation Maximization (GEM) algorithm.
