@@ -1,46 +1,62 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-gemalgorithm
-============
 
-This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by
 
+
+# gemalgorithm
+
+
+This package provides some useful functions  for mixtures of Gaussian Markov random fields. The density function is given by $f(x|\Theta) = \sum \limits_{k=1}^{K}{\pi_k f_k(x|\mu_k,\Sigma_k)}$
+
+where $f_k(x|\mu_{k},\Sigma_{k})$ is the density function of the multivariate normal distribution with mean $\mu_{k}$ and covariance matrix $\Sigma_{k}$, and the mixing proportions $0<\pi_{k}<1$ satisfy $\displaystyle\sum_{k=1}^{K}\pi_{k}=1$.
+In addition, each component of this mixture is associated with a decomposable undirected graph $G_k =(V,\mathcal{E}_k)$, where $V$ is the vertices (nodes) set and $\mathcal{E}_k$ corresponds to the edges of the graph $G_k$.
+The set of all the mixture parameters is
 $$
- f(x|\\Theta) = \\sum \\limits\_{k=1}^{K}{\\pi\_k f\_k(x|\\mu\_k,\\Sigma\_k)}
+ \Theta =\{\pi_1,...,\pi_K,\mu_1,...,\mu_K,\Sigma_1,...,\Sigma_K\}
 $$
-
-where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\\displaystyle\\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
-*Θ* = {*π*<sub>1</sub>, ..., *π*<sub>*K*</sub>, *μ*<sub>1</sub>, ..., *μ*<sub>*K*</sub>, *Σ*<sub>1</sub>, ..., *Σ*<sub>*K*</sub>}
 
 This package allows the estimation of the mixture parameters and data classification. These tasks are achieved using an extended Expectation Maximization algorithm called Graphical Expectation Maximization (GEM) algorithm.
 
 This package exports the following functions:
 
--   graphSigma
--   graphMatrixAssoc
--   computeTau
--   gemEstimator.
+* graphSigma
+* graphMatrixAssoc
+* computeTau
+* gemEstimator.
 
-Required set-up for this package
---------------------------------
+## Required set-up for this package
 
-Currently, this package exists in a development version on GitHub. To use the package, you need to install it directly from GitHub using the `install_github` function from `devtools`.
+Currently, this package exists in a development version on GitHub. To use the package, you need to install it directly from GitHub using the `install_github` function from `devtools`. 
 
-You can use the following code to install the development version of `countyweather`:
+You can use the following code to install the development version of `countyweather`: 
 
-``` r
+
+```r
 library(devtools)
 install_github("km20/gemalogrithm")
 library(gemalgorithm)
 ```
 
-Applying Lauritzen's formula : graphSigma
------------------------------------------
 
-This function applies the lauritzen's formula to a covariance matrix to take into account a decomposable graph structure. It uses the provided covariance matrix and the provided graph to compute the covariance matrix that perfectly fits the set of conditional independence relationships encoded by the graph's cliques and seperators.
+## Applying Lauritzen's formula : graphSigma
+
+This function applies the lauritzen's formula to a covariance matrix
+to take into account a decomposable graph structure. It uses the provided
+covariance matrix and the provided graph to compute the covariance matrix
+that perfectly fits the set of conditional independence relationships
+encoded by the graph's cliques and seperators.
 
 ### Example :
 
-``` r
+
+
+
+```r
 A <- matrix(0,5,5)
 diag(A) <- 1:5
 diag(A[-1,-5]) <- 1:4
@@ -51,48 +67,51 @@ separators <- list(c(2),c(3),c(4))
 nS <- c(1,1,1)
 Anew <- graphSigma(A, cliques, separators, nS)
 print(Anew)
-```
 
-Association degree between an undirected graph and a covariance matrix: graphMatrixAssoc
-----------------------------------------------------------------------------------------
+```
+## Association degree between an undirected graph and a covariance matrix: graphMatrixAssoc
 
 This function computes the association degree between a covariabce matrix and a graph. The computed metric relies only on the correspondance between the zeros in the inverted covariance matrix and the set of conditional independencies.
 
-``` r
+
+```r
 d1 <- graphMatrixAssoc(A,cliques)
 d0 <- graphMatrixAssoc(Anew,cliques)
 ```
 
 Since Anew prefectly matches the conditional independencies in the graph, d0 is equal to 0. However, using the original matrix A, we get a value of d1 equal to 1.95.
 
-Posterior probability : computeTau
-----------------------------------
+## Posterior probability : computeTau
 
-The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*i**j*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*t**h*</sup> component of the mixture and given by: $ \_{ij} = $
+The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. $\tau_{ij}$  is the posterior probability that the observation $X_i$ belongs to the $j^{th}$ component of the mixture and given by:
+$
+\tau_{ij} =\frac{\pi^{(l)}_j f_j(X_i|\mu_j,\Sigma_j)}{\sum\limits_{k=1}^K\pi_k f_k(X_i|\mu_k,\Sigma_k)}
+$
 
 This function returns a matrix with n rows ( observations number) and K columns (mixture components number).
 
-Parameters estimation : gemEstimator
-------------------------------------
+## Parameters estimation : gemEstimator
 
 The main function in this package is the "gemEstimator" which estimates the Gaussian mixture parameters using the GEM algorithm. The mixture components number is supposed to be known. This function uses an initial parameters guess and a set of associated graphs to iteratively estimate the parameters.
 
-Starting from an intial parameters set *Θ*<sup>(0)</sup>, this function repeats iteratively the 3 steps of the GEM algorithm :
+Starting from an intial parameters set $\Theta^{(0)}$, this function repeats iteratively the 3 steps of the GEM algorithm :
 
--   Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit *Θ*<sup>(*l*)</sup> :
+* Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit $\Theta^{(l)}$ :
+$$
+Q(\Theta||\Theta^{(l)}) = E_{\Theta^{(l)}}(L(X_1,...,X_n,Z_1,...,Z_n,\Theta)|X_1,...,X_n)
+$$
 
-$ Q(||^{(l)}) = E\_{^{(l)}}(L(X\_1,...,X\_n,Z\_1,...,Z\_n,)|X\_1,...,X\_n) $
+* Maximization step: Consists in a global maximization of $Q(\Theta||\Theta^{(l)})$ with respect to $\Theta$ :
+$$
+\Theta^{(l+1)} = \arg \max_{\Theta} Q(\Theta||\Theta^{(l)})
+$$
 
--   Maximization step: Consists in a global maximization of *Q*(*Θ*||*Θ*<sup>(*l*)</sup>) with respect to *Θ* :
-
-*Θ*<sup>(*l* + 1)</sup> = argmax<sub>*Θ*</sub>*Q*(*Θ*||*Θ*<sup>(*l*)</sup>)
-
--   G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
+* G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
 
 The stopping rule depends on the "Nit" parameter used in the function gemEstimator:
 
--   If Nit &gt; 0 : The algorithm stops after exactly Nit iterations.
--   If Nit &lt; 0 : The algorithm stops when :
-    $$
-    \\frac{||\\Theta^{l+1} -\\Theta^{l}||}{1+||\\Theta^{l}||} &lt; 10^{-4}
-    $$
+* If Nit > 0 : The algorithm stops after exactly Nit iterations.
+* If Nit < 0 : The algorithm stops when :
+$$
+\frac{||\Theta^{l+1} -\Theta^{l}||}{1+||\Theta^{l}||} < 10^{-4}
+$$
