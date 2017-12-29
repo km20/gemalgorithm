@@ -1,0 +1,6 @@
+export("graphSigma")
+export("graphMatrixAssoc")
+export("computeTau")
+export("gemEstimator")
+
+importFrom("mvtnorm","dmvnorm")
