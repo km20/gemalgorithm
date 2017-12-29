@@ -65,7 +65,9 @@ Since Anew prefectly matches the conditional independencies in the graph, d0 is 
 Posterior probability : computeTau
 ----------------------------------
 
-The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*ij*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*t**h*</sup> component of the mixture and given by: ![3](http://www.sciweavers.org/upload/Tex2Img_1514566223/render.png)
+The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*ij*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*th*</sup> component of the mixture and given by: 
+
+![3](http://www.sciweavers.org/upload/Tex2Img_1514566223/render.png)
 
 This function returns a matrix with n rows ( observations number) and K columns (mixture components number).
 
