@@ -3,9 +3,9 @@ gemalgorithm
 ============
 
 This package provides some useful functions for mixtures of Gaussian Markov random fields. The density function is given by
-$$ \\begin{equation} f(x|\\Theta) = \\sum\_{k=1}^{K}{\\pi\_k f\_k(x|\\mu\_k,\\Sigma\_k)}\\end{equation}$$
+![equatuion](http://www.sciweavers.org/upload/Tex2Img_1514565937/render.png)
 
-where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy $\\displaystyle\\sum\_{k=1}^{K}\\pi\_{k}=1$. In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
+where *f*<sub>*k*</sub>(*x*|*μ*<sub>*k*</sub>, *Σ*<sub>*k*</sub>) is the density function of the multivariate normal distribution with mean *μ*<sub>*k*</sub> and covariance matrix *Σ*<sub>*k*</sub>, and the mixing proportions 0 &lt; *π*<sub>*k*</sub> &lt; 1 satisfy ![eq](http://www.sciweavers.org/upload/Tex2Img_1514565980/render.png). In addition, each component of this mixture is associated with a decomposable undirected graph *G*<sub>*k*</sub> = (*V*, ℰ<sub>*k*</sub>), where *V* is the vertices (nodes) set and ℰ<sub>*k*</sub> corresponds to the edges of the graph *G*<sub>*k*</sub>. The set of all the mixture parameters is
 *Θ* = {*π*<sub>1</sub>, ..., *π*<sub>*K*</sub>, *μ*<sub>1</sub>, ..., *μ*<sub>*K*</sub>, *Σ*<sub>1</sub>, ..., *Σ*<sub>*K*</sub>}
 
 This package allows the estimation of the mixture parameters and data classification. These tasks are achieved using an extended Expectation Maximization algorithm called Graphical Expectation Maximization (GEM) algorithm.
@@ -65,7 +65,9 @@ Since Anew prefectly matches the conditional independencies in the graph, d0 is 
 Posterior probability : computeTau
 ----------------------------------
 
-The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*i**j*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*t**h*</sup> component of the mixture and given by: $ \_{ij} = $
+The "computeTau" function calculates the posterior probability that each observation belongs to each of the mixture components. *τ*<sub>*ij*</sub> is the posterior probability that the observation *X*<sub>*i*</sub> belongs to the *j*<sup>*th*</sup> component of the mixture and given by: 
+
+![3](http://www.sciweavers.org/upload/Tex2Img_1514566223/render.png)
 
 This function returns a matrix with n rows ( observations number) and K columns (mixture components number).
 
@@ -77,9 +79,11 @@ The main function in this package is the "gemEstimator" which estimates the Gaus
 Starting from an intial parameters set *Θ*<sup>(0)</sup>, this function repeats iteratively the 3 steps of the GEM algorithm :
 
 -   Expectation step : Computes the conditional expectation of the complete-data log-likelihood given the observed data, using the current fit *Θ*<sup>(*l*)</sup> :
+
     *Q*(*Θ*||*Θ*<sup>(*l*)</sup>)=*E*<sub>*Θ*<sup>(*l*)</sup></sub>(*L*(*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>, *Z*<sub>1</sub>, ..., *Z*<sub>*n*</sub>, *Θ*)|*X*<sub>1</sub>, ..., *X*<sub>*n*</sub>)
 
 -   Maximization step: Consists in a global maximization of *Q*(*Θ*||*Θ*<sup>(*l*)</sup>) with respect to *Θ* :
+
     *Θ*<sup>(*l* + 1)</sup> = argmax<sub>*Θ*</sub>*Q*(*Θ*||*Θ*<sup>(*l*)</sup>)
 
 -   G-Step : Applies the Lauriten's formula to the estimated covariance matrices in order to take into account the known independencies.
@@ -88,6 +92,5 @@ The stopping rule depends on the "Nit" parameter used in the function gemEstimat
 
 -   If Nit &gt; 0 : The algorithm stops after exactly Nit iterations.
 -   If Nit &lt; 0 : The algorithm stops when :
-    $$
-    \\frac{||\\Theta^{l+1} -\\Theta^{l}||}{1+||\\Theta^{l}||} &lt; 10^{-4}
-    $$
+
+    ![4](http://www.sciweavers.org/upload/Tex2Img_1514566429/render.png)
